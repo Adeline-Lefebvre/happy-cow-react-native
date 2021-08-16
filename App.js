@@ -9,6 +9,8 @@ import RestaurantsScreen from "./containers/RestaurantsScreen";
 import RestaurantScreen from "./containers/RestaurantScreen";
 import MapScreen from "./containers/MapScreen";
 import FavoritesScreen from "./containers/FavoritesScreen";
+import LoginScreen from "./containers/LoginScreen";
+import SignupScreen from "./containers/SignupScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,7 +35,7 @@ export default function App() {
             {() => (
               <Tab.Navigator
                 tabBarOptions={{
-                  activeTintColor: "purple",
+                  activeTintColor: "#6E3FAC",
                   incativeTintColor: "gray",
                 }}
               >
@@ -44,6 +46,7 @@ export default function App() {
                     tabBarIcon: ({ color }) => (
                       <Ionicons name="search" size={24} color={color} />
                     ),
+                    headerShown: false,
                   }}
                 >
                   {() => (
@@ -51,22 +54,29 @@ export default function App() {
                       <Stack.Screen
                         name="Restaurants"
                         component={RestaurantsScreen}
+                        options={{ headerShown: false }}
                       />
                       <Stack.Screen
                         name="Restaurant"
                         component={RestaurantScreen}
+                        options={{ headerShown: false }}
                       />
-                      <Stack.Screen name="Map" component={MapScreen} />
+                      <Stack.Screen
+                        name="Map"
+                        component={MapScreen}
+                        options={{ headerShown: false }}
+                      />
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
                 <Tab.Screen
-                  name="Favorites"
+                  name="Favs"
                   options={{
                     tabBarLabel: "Favoris",
                     tabBarIcon: ({ color }) => (
                       <Feather name="heart" size={24} color={color} />
                     ),
+                    headerShown: false,
                   }}
                 >
                   {() => (
@@ -74,6 +84,7 @@ export default function App() {
                       <Stack.Screen
                         name="Favorites"
                         component={FavoritesScreen}
+                        options={{ headerShown: false }}
                       />
                     </Stack.Navigator>
                   )}

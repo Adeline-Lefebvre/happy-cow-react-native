@@ -1,19 +1,23 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Image, Dimensions } from "react-native";
 
 export default function SplashScreen() {
   return (
-    <View>
-      <Text>SplashScreen</Text>
+    <View style={styles.splashScreen}>
+      <Image source={require("../assets/logo.png")} style={styles.logo} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+  splashScreen: {
+    backgroundColor: "#78B537",
+    height: Dimensions.get("window").height,
     justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: {
+    width: 300,
+    height: 300,
   },
 });
