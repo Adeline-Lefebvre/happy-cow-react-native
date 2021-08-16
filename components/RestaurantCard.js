@@ -4,20 +4,42 @@ import { StyleSheet, View, Text, Image } from "react-native";
 const RestaurantCard = ({ item }) => {
   const { thumbnail, name, type, rating, description } = item;
 
+  let icon;
+
   if (type === "Veg Store") {
-    const icon = require(`../assets/Icons/Veg-Store.png`);
+    icon = require(`../assets/Icons/Veg-Store.png`);
   } else if (type === "Health Store") {
-    const icon = require(`../assets/Icons/Health-Store.png`);
+    icon = require(`../assets/Icons/Health-Store.png`);
   } else if (type === "Ice Cream") {
-    const icon = require(`../assets/Icons/Ice-Cream.png`);
+    icon = require(`../assets/Icons/Ice-Cream.png`);
   } else if (type === "Juice Bar") {
-    const icon = require(`../assets/Icons/Juice-Bar.png`);
+    icon = require(`../assets/Icons/Juice-Bar.png`);
   } else if (type === "Food Truck") {
-    const icon = require(`../assets/Icons/Food-Truck.png`);
+    icon = require(`../assets/Icons/Food-Truck.png`);
   } else if (type === "Market Vendor") {
-    const icon = require(`../assets/Icons/Market-Vendor.png`);
+    icon = require(`../assets/Icons/Market-Vendor.png`);
+  } else if (type === "B&B") {
+    icon = require(`../assets/Icons/B&B.png`);
+  } else if (type === "Bakery") {
+    icon = require(`../assets/Icons/Bakery.png`);
+  } else if (type === "Catering") {
+    icon = require(`../assets/Icons/Catering.png`);
+  } else if (type === "Delivery") {
+    icon = require(`../assets/Icons/Delivery.png`);
+  } else if (type === "Organization") {
+    icon = require(`../assets/Icons/Organization.png`);
+  } else if (type === "Other") {
+    icon = require(`../assets/Icons/Other.png`);
+  } else if (type === "Professional") {
+    icon = require(`../assets/Icons/Professional.png`);
+  } else if (type === "veg-options") {
+    icon = require(`../assets/Icons/veg-options.png`);
+  } else if (type === "vegan") {
+    icon = require(`../assets/Icons/vegan.png`);
+  } else if (type === "vegetarian") {
+    icon = require(`../assets/Icons/vegetarian.png`);
   } else {
-    const icon = require(`../assets/Icons/${type}.png`);
+    icon = require(`../assets/Icons/vegetarian.png`);
   }
 
   return (
@@ -29,10 +51,7 @@ const RestaurantCard = ({ item }) => {
           {description}
         </Text>
       </View>
-      <Image
-        source={require("../assets/Icons/Veg-Store.png")}
-        style={styles.icon}
-      />
+      <Image source={icon} style={styles.icon} />
     </View>
   );
 };
@@ -51,7 +70,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   title: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "500",
   },
   description: {
@@ -60,9 +79,9 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "absolute",
-    top: 0,
-    right: 0,
-    width: 20,
-    height: 20,
+    top: 10,
+    right: 10,
+    width: 25,
+    height: 25,
   },
 });
