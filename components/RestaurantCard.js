@@ -1,46 +1,19 @@
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+import Icon from "./Icon";
+import { Rating } from "react-native-elements";
+import { Linking } from "react-native";
+import { getDistance } from "geolib";
 
-const RestaurantCard = ({ item }) => {
-  const { thumbnail, name, type, rating, description } = item;
+const RestaurantCard = ({ item, coords }) => {
+  const { thumbnail, name, type, rating, description, link, location } = item;
 
-  let icon;
-
-  if (type === "Veg Store") {
-    icon = require(`../assets/Icons/Veg-Store.png`);
-  } else if (type === "Health Store") {
-    icon = require(`../assets/Icons/Health-Store.png`);
-  } else if (type === "Ice Cream") {
-    icon = require(`../assets/Icons/Ice-Cream.png`);
-  } else if (type === "Juice Bar") {
-    icon = require(`../assets/Icons/Juice-Bar.png`);
-  } else if (type === "Food Truck") {
-    icon = require(`../assets/Icons/Food-Truck.png`);
-  } else if (type === "Market Vendor") {
-    icon = require(`../assets/Icons/Market-Vendor.png`);
-  } else if (type === "B&B") {
-    icon = require(`../assets/Icons/B&B.png`);
-  } else if (type === "Bakery") {
-    icon = require(`../assets/Icons/Bakery.png`);
-  } else if (type === "Catering") {
-    icon = require(`../assets/Icons/Catering.png`);
-  } else if (type === "Delivery") {
-    icon = require(`../assets/Icons/Delivery.png`);
-  } else if (type === "Organization") {
-    icon = require(`../assets/Icons/Organization.png`);
-  } else if (type === "Other") {
-    icon = require(`../assets/Icons/Other.png`);
-  } else if (type === "Professional") {
-    icon = require(`../assets/Icons/Professional.png`);
-  } else if (type === "veg-options") {
-    icon = require(`../assets/Icons/veg-options.png`);
-  } else if (type === "vegan") {
-    icon = require(`../assets/Icons/vegan.png`);
-  } else if (type === "vegetarian") {
-    icon = require(`../assets/Icons/vegetarian.png`);
-  } else {
-    icon = require(`../assets/Icons/vegetarian.png`);
-  }
+  const distance = (
+    getDistance(
+      { latitude: coords.latitude, longitude: coords.longitude },
+      { latitude: location.lat, longitude: location.lng }
+    ) / 1000
+  ).toFixed(2);
 
   return (
     <View style={styles.restaurantCard}>
@@ -50,8 +23,21 @@ const RestaurantCard = ({ item }) => {
         <Text style={styles.description} numberOfLines={2}>
           {description}
         </Text>
+        <Icon type={type} />
+        <View style={styles.rating}>
+          <Rating
+            imageSize={14}
+            readonly
+            startingValue={rating}
+            type="custom"
+            ratingBackgroundColor="#F0F0F0"
+          />
+          <Text style={styles.reviews} onPress={() => Linking.openURL(link)}>
+            Reviews
+          </Text>
+        </View>
+        <Text style={styles.distance}>{distance} km</Text>
       </View>
-      <Image source={icon} style={styles.icon} />
     </View>
   );
 };
@@ -60,6 +46,7 @@ export default RestaurantCard;
 
 const styles = StyleSheet.create({
   restaurantCard: {
+    backgroundColor: "white",
     flexDirection: "row",
     padding: 10,
   },
@@ -75,13 +62,24 @@ const styles = StyleSheet.create({
   },
   description: {
     position: "absolute",
-    bottom: 0,
+    bottom: 5,
   },
-  icon: {
+  rating: {
+    alignItems: "flex-start",
+    marginTop: 10,
+    flexDirection: "row",
+  },
+  reviews: {
+    color: "gray",
+    fontSize: 12,
+    textDecorationLine: "underline",
+    marginLeft: 5,
+  },
+  distance: {
+    color: "gray",
+    fontSize: 12,
     position: "absolute",
-    top: 10,
-    right: 10,
-    width: 25,
-    height: 25,
+    right: 0,
+    top: 28,
   },
 });

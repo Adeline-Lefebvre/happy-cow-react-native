@@ -23,7 +23,7 @@ const Header = ({ btn }) => {
       ) : (
         <Entypo
           name="list"
-          size={24}
+          size={30}
           color="white"
           style={styles.btn}
           onPress={() => {
@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     lineHeight: 50,
     textAlign: "center",
     position: "absolute",
-    right: 10,
+    right: 12,
   },
 });

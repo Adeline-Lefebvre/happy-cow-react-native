@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, Feather } from "@expo/vector-icons";
+import * as Location from "expo-location";
 import SplashScreen from "./containers/Splashscreen";
 import RestaurantsScreen from "./containers/RestaurantsScreen";
 import RestaurantScreen from "./containers/RestaurantScreen";
@@ -16,8 +17,29 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  // const [isLoading, setIsLoading] = useState(true);
-  const isLoading = false;
+  const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [coords, setCoords] = useState();
+
+  useEffect(() => {
+    const askPermission = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status === "granted") {
+        let location = await Location.getCurrentPositionAsync({});
+
+        const obj = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        };
+        setCoords(obj);
+      } else {
+        setError(true);
+      }
+      setIsLoading(false);
+    };
+    askPermission();
+  }, []);
 
   return (
     <NavigationContainer>
@@ -53,9 +75,10 @@ export default function App() {
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Restaurants"
-                        component={RestaurantsScreen}
                         options={{ headerShown: false }}
-                      />
+                      >
+                        {() => <RestaurantsScreen coords={coords} />}
+                      </Stack.Screen>
                       <Stack.Screen
                         name="Restaurant"
                         component={RestaurantScreen}

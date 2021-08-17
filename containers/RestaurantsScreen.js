@@ -5,12 +5,12 @@ import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import RestaurantsList from "../components/RestaurantsList";
 
-export default function RestaurantsScreen() {
+export default function RestaurantsScreen({ coords }) {
   return (
     <View style={styles.skipStatusBar}>
       <Header btn="map" />
       <SearchBar />
-      <RestaurantsList />
+      <RestaurantsList coords={coords} />
     </View>
   );
 }
