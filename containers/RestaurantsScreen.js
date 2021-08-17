@@ -7,10 +7,12 @@ import RestaurantsList from "../components/RestaurantsList";
 
 export default function RestaurantsScreen({ coords }) {
   return (
-    <View style={styles.skipStatusBar}>
-      <Header btn="map" />
-      <SearchBar />
-      <RestaurantsList coords={coords} />
+    <View style={{ backgroundColor: "#523383" }}>
+      <View style={styles.skipStatusBar}>
+        <Header btn="map" />
+        <SearchBar />
+        <RestaurantsList coords={coords} />
+      </View>
     </View>
   );
 }

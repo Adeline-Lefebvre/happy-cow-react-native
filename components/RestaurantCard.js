@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import Icon from "./Icon";
 import { Rating } from "react-native-elements";
 import { Linking } from "react-native";
@@ -7,6 +8,8 @@ import { getDistance } from "geolib";
 
 const RestaurantCard = ({ item, coords }) => {
   const { thumbnail, name, type, rating, description, link, location } = item;
+
+  const navigation = useNavigation();
 
   const distance = (
     getDistance(
@@ -16,14 +19,20 @@ const RestaurantCard = ({ item, coords }) => {
   ).toFixed(2);
 
   return (
-    <View style={styles.restaurantCard}>
+    <TouchableOpacity
+      style={styles.restaurantCard}
+      activeOpacity={0.8}
+      onPress={() => {
+        navigation.navigate("Restaurant", { item: item, distance: distance });
+      }}
+    >
       <Image source={{ uri: thumbnail }} style={styles.image} />
       <View style={{ flex: 1 }}>
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.description} numberOfLines={2}>
           {description}
         </Text>
-        <Icon type={type} />
+        <Icon type={type} style={styles.icon} />
         <View style={styles.rating}>
           <Rating
             imageSize={14}
@@ -38,7 +47,7 @@ const RestaurantCard = ({ item, coords }) => {
         </View>
         <Text style={styles.distance}>{distance} km</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -59,6 +68,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: "500",
+  },
+  icon: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    width: 25,
+    height: 25,
   },
   description: {
     position: "absolute",

@@ -43,6 +43,11 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <StatusBar
+        translucent
+        barStyle="dark-content"
+        backgroundColor="#00BCD4"
+      />
       {isLoading ? (
         <Stack.Navigator>
           <Stack.Screen

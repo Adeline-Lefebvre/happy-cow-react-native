@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Image } from "react-native";
 
-const Icon = ({ type }) => {
+const Icon = ({ type, style }) => {
   let icon;
 
   if (type === "Veg Store") {
@@ -40,17 +40,7 @@ const Icon = ({ type }) => {
     icon = require(`../assets/Icons/vegetarian.png`);
   }
 
-  return <Image source={icon} style={styles.icon} />;
+  return <Image source={icon} style={style} />;
 };
 
 export default Icon;
-
-const styles = StyleSheet.create({
-  icon: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    width: 25,
-    height: 25,
-  },
-});
