@@ -80,9 +80,10 @@ export default function App() {
                       </Stack.Screen>
                       <Stack.Screen
                         name="Restaurant"
-                        component={RestaurantScreen}
                         options={{ headerShown: false }}
-                      />
+                      >
+                        {() => <RestaurantScreen coords={coords} />}
+                      </Stack.Screen>
                       <Stack.Screen
                         name="Map"
                         component={MapScreen}

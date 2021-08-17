@@ -2,8 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Icon from "./Icon";
-import { Rating } from "react-native-elements";
-import { Linking } from "react-native";
+import Rate from "./Rate";
 import { getDistance } from "geolib";
 
 const RestaurantCard = ({ item, coords }) => {
@@ -33,18 +32,7 @@ const RestaurantCard = ({ item, coords }) => {
           {description}
         </Text>
         <Icon type={type} style={styles.icon} />
-        <View style={styles.rating}>
-          <Rating
-            imageSize={14}
-            readonly
-            startingValue={rating}
-            type="custom"
-            ratingBackgroundColor="#F0F0F0"
-          />
-          <Text style={styles.reviews} onPress={() => Linking.openURL(link)}>
-            Reviews
-          </Text>
-        </View>
+        <Rate rating={rating} link={link} />
         <Text style={styles.distance}>{distance} km</Text>
       </View>
     </TouchableOpacity>
@@ -79,17 +67,6 @@ const styles = StyleSheet.create({
   description: {
     position: "absolute",
     bottom: 5,
-  },
-  rating: {
-    alignItems: "flex-start",
-    marginTop: 10,
-    flexDirection: "row",
-  },
-  reviews: {
-    color: "gray",
-    fontSize: 12,
-    textDecorationLine: "underline",
-    marginLeft: 5,
   },
   distance: {
     color: "gray",

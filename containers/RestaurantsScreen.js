@@ -5,16 +5,13 @@ import Constants from "expo-constants";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import RestaurantsList from "../components/RestaurantsList";
+import Statusbar from "../components/Statusbar";
 
 export default function RestaurantsScreen({ coords }) {
   return (
-    <View style={{ backgroundColor: "#523383" }}>
-      <StatusBar
-        translucent
-        barStyle="dark-content"
-        backgroundColor="#00BCD4"
-      />
-      <View style={styles.skipStatusBar}>
+    <View>
+      <Statusbar style={{ backgroundColor: "#523383" }} />
+      <View>
         <Header btn="map" />
         <SearchBar />
         <RestaurantsList coords={coords} />
@@ -22,9 +19,3 @@ export default function RestaurantsScreen({ coords }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  skipStatusBar: {
-    paddingTop: Constants.statusBarHeight,
-  },
-});
