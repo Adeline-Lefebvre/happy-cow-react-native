@@ -84,11 +84,9 @@ export default function App() {
                       >
                         {() => <RestaurantScreen coords={coords} />}
                       </Stack.Screen>
-                      <Stack.Screen
-                        name="Map"
-                        component={MapScreen}
-                        options={{ headerShown: false }}
-                      />
+                      <Stack.Screen name="Map" options={{ headerShown: false }}>
+                        {() => <MapScreen coords={coords} />}
+                      </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>

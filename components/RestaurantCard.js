@@ -22,7 +22,7 @@ const RestaurantCard = ({ item, coords }) => {
       style={styles.restaurantCard}
       activeOpacity={0.8}
       onPress={() => {
-        navigation.navigate("Restaurant", { item: item, distance: distance });
+        navigation.navigate("Restaurant", { item: item });
       }}
     >
       <Image source={{ uri: thumbnail }} style={styles.image} />

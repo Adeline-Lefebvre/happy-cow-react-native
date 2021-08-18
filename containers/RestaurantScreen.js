@@ -8,10 +8,14 @@ import {
   ScrollView,
 } from "react-native";
 import { useRoute } from "@react-navigation/core";
-import { Feather } from "@expo/vector-icons";
+import {
+  Feather,
+  FontAwesome5,
+  MaterialIcons,
+  Ionicons,
+} from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { getDistance } from "geolib";
-import restaurants from "../assets/happyCowRestaurants.json";
 import MapView from "react-native-maps";
 import Icon from "../components/Icon";
 import Rate from "../components/Rate";
@@ -71,7 +75,28 @@ export default function RestaurantScreen({ coords }) {
         <Text style={styles.title}>{type}</Text>
         <Text style={styles.distance}>{distance} km</Text>
       </View>
+      <View style={styles.btns}>
+        <View style={styles.btn}>
+          <View style={styles.icons}>
+            <FontAwesome5 name="pen" size={20} color="white" />
+          </View>
+          <Text>Add Review</Text>
+        </View>
+        <View style={styles.btn}>
+          <View style={styles.icons}>
+            <MaterialIcons name="add-a-photo" size={24} color="white" />
+          </View>
+          <Text>Add Photos</Text>
+        </View>
+        <View style={styles.btn}>
+          <View style={styles.icons}>
+            <Ionicons name="call" size={24} color="white" />
+          </View>
+          <Text>Call</Text>
+        </View>
+      </View>
       <Text style={styles.description}>{description}</Text>
+
       <MapView
         style={styles.map}
         initialRegion={{
@@ -171,5 +196,24 @@ const styles = StyleSheet.create({
     height: 46,
     marginLeft: -18,
     marginTop: -46,
+  },
+  btns: {
+    height: 110,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderBottomColor: "lightgray",
+    borderBottomWidth: 1,
+  },
+  btn: {
+    alignItems: "center",
+    width: 80,
+  },
+  icons: {
+    backgroundColor: "purple",
+    padding: 15,
+    borderRadius: 30,
+    marginBottom: 10,
   },
 });

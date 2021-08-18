@@ -1,7 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import Constants from "expo-constants";
+import { View } from "react-native";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import RestaurantsList from "../components/RestaurantsList";
