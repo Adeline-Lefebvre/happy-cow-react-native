@@ -3,12 +3,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, Feather } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from "expo-location";
 import SplashScreen from "./containers/Splashscreen";
 import RestaurantsScreen from "./containers/RestaurantsScreen";
 import RestaurantScreen from "./containers/RestaurantScreen";
 import MapScreen from "./containers/MapScreen";
 import FavoritesScreen from "./containers/FavoritesScreen";
+import FavoritesMapScreen from "./containers/FavoritesMapScreen";
 import LoginScreen from "./containers/LoginScreen";
 import SignupScreen from "./containers/SignupScreen";
 
@@ -19,6 +21,16 @@ export default function App() {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [coords, setCoords] = useState();
+  const [favorites, setFavorites] = useState([]);
+
+  const storeFavorites = async (favs) => {
+    if (favs) {
+      AsyncStorage.setItem("favorites", JSON.stringify(favs));
+    } else {
+      AsyncStorage.removeItem("favorites");
+    }
+    setFavorites(favs);
+  };
 
   useEffect(() => {
     const askPermission = async () => {
@@ -37,7 +49,15 @@ export default function App() {
       }
       setIsLoading(false);
     };
+
+    const getFavorites = async () => {
+      if (AsyncStorage.getItem("favorites")) {
+        setFavorites(JSON.parse(await AsyncStorage.getItem("favorites")));
+      }
+    };
+
     askPermission();
+    getFavorites();
   }, []);
 
   return (
@@ -82,7 +102,13 @@ export default function App() {
                         name="Restaurant"
                         options={{ headerShown: false }}
                       >
-                        {() => <RestaurantScreen coords={coords} />}
+                        {() => (
+                          <RestaurantScreen
+                            coords={coords}
+                            favorites={favorites}
+                            storeFavorites={storeFavorites}
+                          />
+                        )}
                       </Stack.Screen>
                       <Stack.Screen name="Map" options={{ headerShown: false }}>
                         {() => <MapScreen coords={coords} />}
@@ -104,9 +130,26 @@ export default function App() {
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Favorites"
-                        component={FavoritesScreen}
                         options={{ headerShown: false }}
-                      />
+                      >
+                        {() => (
+                          <FavoritesScreen
+                            favorites={favorites}
+                            coords={coords}
+                          />
+                        )}
+                      </Stack.Screen>
+                      <Stack.Screen
+                        name="FavoritesMap"
+                        options={{ headerShown: false }}
+                      >
+                        {() => (
+                          <FavoritesMapScreen
+                            coords={coords}
+                            favorites={favorites}
+                          />
+                        )}
+                      </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>

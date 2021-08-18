@@ -46,6 +46,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flexDirection: "row",
     padding: 10,
+    borderBottomColor: "#DCDCDC",
+    borderBottomWidth: 1,
   },
   image: {
     width: 100,

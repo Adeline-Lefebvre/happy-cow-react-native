@@ -1,19 +1,36 @@
 import React from "react";
-import { StyleSheet, Dimensions, View, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import Header from "../components/Header";
+import { Feather } from "@expo/vector-icons";
 import Statusbar from "../components/Statusbar";
 import Marker from "../components/Marker";
 import MapView from "react-native-maps";
-import restaurants from "../assets/happyCowRestaurants.json";
 
-export default function MapScreen({ coords }) {
+export default function FavoritesMapScreen({ coords, favorites }) {
   const navigation = useNavigation();
 
   return (
     <View>
       <Statusbar style={{ backgroundColor: "#523383" }} />
-      <Header btn="list" />
+      <View>
+        <Text style={styles.title}>Favoris</Text>
+        <TouchableOpacity
+          style={styles.arrow}
+          activeOpacity={0.8}
+          onPress={() => {
+            navigation.navigate("Favorites");
+          }}
+        >
+          <Feather name="arrow-left" size={35} color="white" />
+        </TouchableOpacity>
+      </View>
       <MapView
         style={styles.map}
         initialRegion={{
@@ -24,7 +41,7 @@ export default function MapScreen({ coords }) {
         }}
         showsUserLocation={true}
       >
-        {restaurants.map((place) => {
+        {favorites.map((place) => {
           return (
             <MapView.Marker
               key={place.placeId}
@@ -58,6 +75,19 @@ export default function MapScreen({ coords }) {
 }
 
 const styles = StyleSheet.create({
+  arrow: {
+    position: "absolute",
+    top: 10,
+    left: 15,
+  },
+  title: {
+    backgroundColor: "#6E3FAC",
+    textAlign: "center",
+    lineHeight: 60,
+    color: "white",
+    fontSize: 22,
+    fontWeight: "500",
+  },
   map: {
     height: Dimensions.get("window").height - 128,
     width: "100%",

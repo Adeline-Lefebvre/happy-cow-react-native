@@ -6,23 +6,31 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Linking,
 } from "react-native";
 import { useRoute } from "@react-navigation/core";
 import {
   Feather,
   FontAwesome5,
+  FontAwesome,
   MaterialIcons,
   Ionicons,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import { getDistance } from "geolib";
+import Constants from "expo-constants";
 import MapView from "react-native-maps";
 import Icon from "../components/Icon";
 import Rate from "../components/Rate";
 import colorTheme from "../components/colorTheme";
 import Marker from "../components/Marker";
+import { Alert } from "react-native";
 
-export default function RestaurantScreen({ coords }) {
+export default function RestaurantScreen({
+  coords,
+  favorites,
+  storeFavorites,
+}) {
   const { params } = useRoute();
 
   const {
@@ -34,6 +42,7 @@ export default function RestaurantScreen({ coords }) {
     link,
     location,
     address,
+    phone,
   } = params.item;
 
   const distance = (
@@ -47,6 +56,8 @@ export default function RestaurantScreen({ coords }) {
 
   const backgroundColor = `backgroundColor: ${colorTheme(type)}`;
 
+  const favorite = favorites.indexOf(params.item);
+
   return (
     <ScrollView>
       <View>
@@ -59,12 +70,39 @@ export default function RestaurantScreen({ coords }) {
           style={styles.arrow}
           activeOpacity={0.8}
           onPress={() => {
-            navigation.navigate("Restaurants");
+            navigation.goBack();
           }}
         >
-          <Feather name="arrow-left" size={38} color="white" />
+          <Feather name="arrow-left" size={35} color="white" />
         </TouchableOpacity>
-        <Feather name="heart" size={30} color="white" style={styles.heart} />
+
+        {favorite === -1 ? (
+          <TouchableOpacity
+            style={styles.heart}
+            activeOpacity={0.8}
+            onPress={() => {
+              const newTab = [...favorites];
+              newTab.push(params.item);
+              storeFavorites(newTab);
+              Alert.alert("Ajouté à la liste de favoris");
+            }}
+          >
+            <Feather name="heart" size={25} color="white" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={styles.heart}
+            activeOpacity={0.8}
+            onPress={() => {
+              const newTab = [...favorites];
+              newTab.splice(favorite, 1);
+              storeFavorites(newTab);
+              Alert.alert("Retiré de la liste de favoris");
+            }}
+          >
+            <FontAwesome name="heart" size={25} color="white" />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.blueBar}>
         <Text style={styles.name}>{name}</Text>
@@ -89,9 +127,13 @@ export default function RestaurantScreen({ coords }) {
           <Text>Add Photos</Text>
         </View>
         <View style={styles.btn}>
-          <View style={styles.icons}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.icons}
+            onPress={() => Linking.openURL(`tel:${phone}`)}
+          >
             <Ionicons name="call" size={24} color="white" />
-          </View>
+          </TouchableOpacity>
           <Text>Call</Text>
         </View>
       </View>
@@ -102,8 +144,8 @@ export default function RestaurantScreen({ coords }) {
         initialRegion={{
           latitude: location.lat,
           longitude: location.lng,
-          latitudeDelta: 0.04,
-          longitudeDelta: 0.04,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
         }}
         showsUserLocation={true}
       >
@@ -158,12 +200,12 @@ const styles = StyleSheet.create({
   },
   arrow: {
     position: "absolute",
-    top: 22,
+    top: Constants.statusBarHeight + 10,
     left: 15,
   },
   heart: {
     position: "absolute",
-    top: 25,
+    top: Constants.statusBarHeight + 12,
     right: 15,
   },
   blueBar: {
@@ -212,7 +254,10 @@ const styles = StyleSheet.create({
   },
   icons: {
     backgroundColor: "purple",
-    padding: 15,
+    width: 55,
+    height: 55,
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 30,
     marginBottom: 10,
   },
