@@ -54,9 +54,24 @@ export default function RestaurantScreen({
 
   const navigation = useNavigation();
 
-  const backgroundColor = `backgroundColor: ${colorTheme(type)}`;
-
   const favorite = favorites.indexOf(params.item);
+
+  const color = StyleSheet.create({
+    blueBar: {
+      backgroundColor: colorTheme(type),
+      height: 110,
+      padding: 15,
+    },
+    icons: {
+      backgroundColor: colorTheme(type),
+      width: 55,
+      height: 55,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 30,
+      marginBottom: 10,
+    },
+  });
 
   return (
     <ScrollView>
@@ -104,9 +119,14 @@ export default function RestaurantScreen({
           </TouchableOpacity>
         )}
       </View>
-      <View style={styles.blueBar}>
+      <View style={color.blueBar}>
         <Text style={styles.name}>{name}</Text>
-        <Rate rating={rating} link={link} bgColor="#9B49A0" />
+        <Rate
+          rating={rating}
+          link={link}
+          bgColor={colorTheme(type)}
+          reviewColor="white"
+        />
       </View>
       <View style={styles.category}>
         <Icon type={type} style={styles.icon} />
@@ -115,13 +135,13 @@ export default function RestaurantScreen({
       </View>
       <View style={styles.btns}>
         <View style={styles.btn}>
-          <View style={styles.icons}>
+          <View style={color.icons}>
             <FontAwesome5 name="pen" size={20} color="white" />
           </View>
           <Text>Add Review</Text>
         </View>
         <View style={styles.btn}>
-          <View style={styles.icons}>
+          <View style={color.icons}>
             <MaterialIcons name="add-a-photo" size={24} color="white" />
           </View>
           <Text>Add Photos</Text>
@@ -129,7 +149,7 @@ export default function RestaurantScreen({
         <View style={styles.btn}>
           <TouchableOpacity
             activeOpacity={0.6}
-            style={styles.icons}
+            style={color.icons}
             onPress={() => Linking.openURL(`tel:${phone}`)}
           >
             <Ionicons name="call" size={24} color="white" />
@@ -208,11 +228,6 @@ const styles = StyleSheet.create({
     top: Constants.statusBarHeight + 12,
     right: 15,
   },
-  blueBar: {
-    backgroundColor: "#9B49A0",
-    height: 110,
-    padding: 15,
-  },
   name: {
     color: "white",
     fontSize: 18,
@@ -251,14 +266,5 @@ const styles = StyleSheet.create({
   btn: {
     alignItems: "center",
     width: 80,
-  },
-  icons: {
-    backgroundColor: "purple",
-    width: 55,
-    height: 55,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 30,
-    marginBottom: 10,
   },
 });

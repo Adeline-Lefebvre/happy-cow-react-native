@@ -3,7 +3,21 @@ import { StyleSheet, View, Text } from "react-native";
 import { Rating } from "react-native-elements";
 import { Linking } from "react-native";
 
-const Rate = ({ rating, link, bgColor }) => {
+const Rate = ({ rating, link, bgColor, reviewColor }) => {
+  const styles = StyleSheet.create({
+    rating: {
+      alignItems: "flex-start",
+      marginTop: 10,
+      flexDirection: "row",
+    },
+    reviews: {
+      color: reviewColor,
+      fontSize: 12,
+      textDecorationLine: "underline",
+      marginLeft: 5,
+    },
+  });
+
   return (
     <View style={styles.rating}>
       <Rating
@@ -22,17 +36,3 @@ const Rate = ({ rating, link, bgColor }) => {
 };
 
 export default Rate;
-
-const styles = StyleSheet.create({
-  rating: {
-    alignItems: "flex-start",
-    marginTop: 10,
-    flexDirection: "row",
-  },
-  reviews: {
-    color: "lightgray",
-    fontSize: 12,
-    textDecorationLine: "underline",
-    marginLeft: 5,
-  },
-});

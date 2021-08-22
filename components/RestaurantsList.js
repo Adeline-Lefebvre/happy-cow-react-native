@@ -1,13 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Text, FlatList, ScrollView } from "react-native";
-import restaurants from "../assets/happyCowRestaurants.json";
+import { StyleSheet, View, Text, FlatList } from "react-native";
 import RestaurantCard from "./RestaurantCard";
 
-const RestaurantsList = ({ coords }) => {
+const RestaurantsList = ({ coords, result }) => {
   return (
     <View>
       <FlatList
-        data={restaurants}
+        data={result}
         keyExtractor={(item) => String(item.placeId)}
         renderItem={({ item }) => {
           return <RestaurantCard item={item} coords={coords} />;

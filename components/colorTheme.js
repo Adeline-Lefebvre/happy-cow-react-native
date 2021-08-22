@@ -1,4 +1,4 @@
-const colorTheme = ({ type }) => {
+const colorTheme = (type) => {
   let color = "";
 
   if (type === "Veg Store") {

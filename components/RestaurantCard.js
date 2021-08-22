@@ -32,7 +32,7 @@ const RestaurantCard = ({ item, coords }) => {
           {description}
         </Text>
         <Icon type={type} style={styles.icon} />
-        <Rate rating={rating} link={link} />
+        <Rate rating={rating} link={link} reviewColor="gray" />
         <Text style={styles.distance}>{distance} km</Text>
       </View>
     </TouchableOpacity>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flexDirection: "row",
     padding: 10,
-    borderBottomColor: "#DCDCDC",
+    borderBottomColor: "#F4F4F4",
     borderBottomWidth: 1,
   },
   image: {
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
   description: {
     position: "absolute",
     bottom: 5,
+    fontSize: 13,
   },
   distance: {
     color: "gray",
