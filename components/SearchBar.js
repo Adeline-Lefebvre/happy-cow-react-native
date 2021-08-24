@@ -1,19 +1,28 @@
 import React from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/core";
 
 const SearchBar = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.searchBar}>
-      <View style={styles.input}>
+      <TouchableOpacity
+        style={styles.input}
+        onPress={() => {
+          navigation.navigate("Search");
+        }}
+        activeOpacity="0.9"
+      >
         <Entypo
           name="compass"
           size={24}
           color="gray"
           style={{ marginRight: 10 }}
         />
-        <TextInput placeholder="A proximité"></TextInput>
-      </View>
+        <Text style={{ color: "gray" }}>A proximité</Text>
+      </TouchableOpacity>
     </View>
   );
 };

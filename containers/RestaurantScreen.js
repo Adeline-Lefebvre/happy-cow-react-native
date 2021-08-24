@@ -8,7 +8,6 @@ import {
   ScrollView,
   Linking,
 } from "react-native";
-import { useRoute } from "@react-navigation/core";
 import {
   Feather,
   FontAwesome5,
@@ -16,7 +15,7 @@ import {
   MaterialIcons,
   Ionicons,
 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useRoute } from "@react-navigation/core";
 import { getDistance } from "geolib";
 import Constants from "expo-constants";
 import MapView from "react-native-maps";

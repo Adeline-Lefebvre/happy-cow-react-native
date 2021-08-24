@@ -11,6 +11,7 @@ import RestaurantScreen from "./containers/RestaurantScreen";
 import MapScreen from "./containers/MapScreen";
 import FavoritesScreen from "./containers/FavoritesScreen";
 import FavoritesMapScreen from "./containers/FavoritesMapScreen";
+import SearchScreen from "./containers/SearchScreen";
 import LoginScreen from "./containers/LoginScreen";
 import SignupScreen from "./containers/SignupScreen";
 
@@ -97,6 +98,12 @@ export default function App() {
                         options={{ headerShown: false }}
                       >
                         {() => <RestaurantsScreen coords={coords} />}
+                      </Stack.Screen>
+                      <Stack.Screen
+                        name="Search"
+                        options={{ headerShown: false }}
+                      >
+                        {() => <SearchScreen />}
                       </Stack.Screen>
                       <Stack.Screen
                         name="Restaurant"

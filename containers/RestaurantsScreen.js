@@ -1,42 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
+import { useRoute } from "@react-navigation/core";
 import { AntDesign } from "@expo/vector-icons";
-import restaurants from "../assets/happyCowRestaurants.json";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import RestaurantsList from "../components/RestaurantsList";
 import Statusbar from "../components/Statusbar";
 
 export default function RestaurantsScreen({ coords }) {
-  let [result, setResult] = useState(restaurants);
-  let [activateFilters, setActivateFilters] = useState({
-    vegan: true,
-    vegetarian: true,
-    vegOptions: true,
-  });
+  let [filters, setFilters] = useState({});
+  let [displayAll, setDisplayAll] = useState(true);
 
-  let filters = [];
+  const { params } = useRoute();
 
   const handleFilters = (filter) => {
-    setActivateFilters({
-      ...activateFilters,
-      [filter]: !activateFilters[filter],
+    setFilters({
+      ...filters,
+      [filter]: !filters[filter],
     });
-
-    for (i = 0; i < activateFilters.length; i++) {
-      if (activateFilters[i]) {
-        filters[i] = activateFilters.keys[i];
-      }
-    }
-
-    setResult(
-      restaurants.filter((place) => {
-        for (i = 0; i < filters.length; i++) {
-          place.type === filters[i];
-        }
-      })
-    );
   };
+
+  if (params) {
+    console.log(params);
+  }
+
+  useEffect(() => {
+    if (Object.values(filters).every((x) => x === false)) {
+      setDisplayAll(true);
+    } else {
+      setDisplayAll(false);
+    }
+  }, [filters]);
 
   return (
     <View>
@@ -46,7 +40,7 @@ export default function RestaurantsScreen({ coords }) {
         <SearchBar />
         <View style={styles.filters}>
           <TouchableOpacity
-            style={styles.filter}
+            style={filters.vegan ? styles.veganFilter : styles.filter}
             onPress={() => {
               handleFilters("vegan");
             }}
@@ -55,10 +49,17 @@ export default function RestaurantsScreen({ coords }) {
               source={require("../assets/Icons/vegan.png")}
               style={styles.icon}
             />
-            <Text style={styles.filterTitle}>Vegan</Text>
+            <Text
+              style={
+                filters.vegan ? styles.filterTitleWhite : styles.filterTitle
+              }
+            >
+              Vegan
+            </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
-            style={styles.filter}
+            style={filters.vegetarian ? styles.vegetarianFilter : styles.filter}
             onPress={() => {
               handleFilters("vegetarian");
             }}
@@ -67,10 +68,20 @@ export default function RestaurantsScreen({ coords }) {
               source={require("../assets/Icons/vegetarian.png")}
               style={styles.icon}
             />
-            <Text style={styles.filterTitle}>Végétarien</Text>
+            <Text
+              style={
+                filters.vegetarian
+                  ? styles.filterTitleWhite
+                  : styles.filterTitle
+              }
+            >
+              Végétarien
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.filter}
+            style={
+              filters["veg-options"] ? styles.vegOptionsFilter : styles.filter
+            }
             onPress={() => {
               handleFilters("veg-options");
             }}
@@ -79,7 +90,14 @@ export default function RestaurantsScreen({ coords }) {
               source={require("../assets/Icons/veg-options.png")}
               style={styles.icon}
             />
-            <Text numberOfLines={1} style={styles.filterTitle}>
+            <Text
+              numberOfLines={1}
+              style={
+                filters["veg-options"]
+                  ? styles.filterTitleWhite
+                  : styles.filterTitle
+              }
+            >
               Options végétariennes
             </Text>
           </TouchableOpacity>
@@ -93,7 +111,12 @@ export default function RestaurantsScreen({ coords }) {
             <Text style={styles.filterTitle}>Filtres</Text>
           </TouchableOpacity>
         </View>
-        <RestaurantsList coords={coords} result={result} />
+        <RestaurantsList
+          coords={coords}
+          filters={filters}
+          displayAll={displayAll}
+          keyword={params.keyword}
+        />
       </View>
     </View>
   );
@@ -130,8 +153,70 @@ const styles = StyleSheet.create({
     width: 25,
     marginBottom: 5,
   },
+  veganFilter: {
+    backgroundColor: "#479C5E",
+    height: 60,
+    flex: 1,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 2,
+    marginRight: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 5,
+  },
+  vegetarianFilter: {
+    backgroundColor: "#9B49A0",
+    height: 60,
+    flex: 1,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 2,
+    marginRight: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 5,
+  },
+  vegOptionsFilter: {
+    backgroundColor: "#E17675",
+    height: 60,
+    flex: 1,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 2,
+    marginRight: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 5,
+  },
   filterTitle: {
     fontSize: 12,
     fontWeight: "500",
+  },
+  filterTitleWhite: {
+    fontSize: 12,
+    fontWeight: "500",
+    color: "white",
   },
 });

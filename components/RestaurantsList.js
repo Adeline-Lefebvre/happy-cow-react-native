@@ -1,15 +1,22 @@
 import React from "react";
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
+import restaurants from "../assets/happyCowRestaurants.json";
 import RestaurantCard from "./RestaurantCard";
 
-const RestaurantsList = ({ coords, result }) => {
+const RestaurantsList = ({ coords, filters, displayAll, keyword }) => {
   return (
     <View>
       <FlatList
-        data={result}
+        data={restaurants}
         keyExtractor={(item) => String(item.placeId)}
         renderItem={({ item }) => {
-          return <RestaurantCard item={item} coords={coords} />;
+          return displayAll ? (
+            <RestaurantCard item={item} coords={coords} />
+          ) : filters[item.type] && !keyword ? (
+            <RestaurantCard item={item} coords={coords} />
+          ) : filters[item.type] && item.name.search(keyword) >= 0 ? (
+            <RestaurantCard item={item} coords={coords} />
+          ) : null;
         }}
       />
     </View>
