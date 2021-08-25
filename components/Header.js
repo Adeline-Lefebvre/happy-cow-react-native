@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Image, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
+import MapIcon from "../components/MapIcon";
 
 const Header = ({ btn }) => {
   const navigation = useNavigation();
@@ -11,15 +11,7 @@ const Header = ({ btn }) => {
     <View style={styles.header}>
       <Image source={require("../assets/logo-white.png")} style={styles.logo} />
       {btn === "map" ? (
-        <Feather
-          name="map"
-          size={24}
-          color="white"
-          style={styles.btn}
-          onPress={() => {
-            navigation.navigate("Map");
-          }}
-        />
+        <MapIcon nav="Map" />
       ) : (
         <Entypo
           name="list"

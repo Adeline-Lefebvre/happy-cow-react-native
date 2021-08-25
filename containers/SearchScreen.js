@@ -11,7 +11,7 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 
 export default function SearchScreen() {
-  const [keyword, setKeyword] = useState();
+  const [keyword, setKeyword] = useState("biocoop");
   const [city, setCity] = useState();
 
   const navigation = useNavigation();

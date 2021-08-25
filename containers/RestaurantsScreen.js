@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
-import { useRoute } from "@react-navigation/core";
+// import { useRoute } from "@react-navigation/core";
 import { AntDesign } from "@expo/vector-icons";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
@@ -11,7 +11,7 @@ export default function RestaurantsScreen({ coords }) {
   let [filters, setFilters] = useState({});
   let [displayAll, setDisplayAll] = useState(true);
 
-  const { params } = useRoute();
+  // const { params } = useRoute();
 
   const handleFilters = (filter) => {
     setFilters({
@@ -19,10 +19,6 @@ export default function RestaurantsScreen({ coords }) {
       [filter]: !filters[filter],
     });
   };
-
-  if (params) {
-    console.log(params);
-  }
 
   useEffect(() => {
     if (Object.values(filters).every((x) => x === false)) {
@@ -115,7 +111,6 @@ export default function RestaurantsScreen({ coords }) {
           coords={coords}
           filters={filters}
           displayAll={displayAll}
-          keyword={params.keyword}
         />
       </View>
     </View>

@@ -24,6 +24,7 @@ import Rate from "../components/Rate";
 import colorTheme from "../components/colorTheme";
 import Marker from "../components/Marker";
 import { Alert } from "react-native";
+import ArrowLeft from "../components/ArrowLeft";
 
 export default function RestaurantScreen({
   coords,
