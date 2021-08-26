@@ -19,6 +19,7 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const [userToken, setUserToken] = useState(null);
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [coords, setCoords] = useState();
@@ -32,6 +33,15 @@ export default function App() {
       AsyncStorage.removeItem("favorites");
     }
     setFavorites(favs);
+  };
+
+  const setToken = async (token) => {
+    if (token) {
+      AsyncStorage.setItem("userToken", token);
+    } else {
+      AsyncStorage.removeItem("userToken");
+    }
+    setUserToken(token);
   };
 
   useEffect(() => {
@@ -49,7 +59,6 @@ export default function App() {
       } else {
         setError(true);
       }
-      setIsLoading(false);
     };
 
     const getFavorites = async () => {
@@ -58,8 +67,16 @@ export default function App() {
       }
     };
 
+    const bootstrapAsync = async () => {
+      if (AsyncStorage.getItem("userToken")) {
+        setUserToken(await AsyncStorage.getItem("userToken"));
+      }
+      setIsLoading(false);
+    };
+
     askPermission();
     getFavorites();
+    bootstrapAsync();
   }, []);
 
   return (
@@ -72,14 +89,28 @@ export default function App() {
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
+      ) : userToken === null ? (
+        <Stack.Navigator>
+          <Stack.Screen name="SignUp" options={{ headerShown: false }}>
+            {() => <SignupScreen setToken={setToken} />}
+          </Stack.Screen>
+          <Stack.Screen name="LogIn" options={{ headerShown: false }}>
+            {() => <LoginScreen setToken={setToken} />}
+          </Stack.Screen>
+        </Stack.Navigator>
       ) : (
         <Stack.Navigator>
           <Stack.Screen name="Tab" options={{ headerShown: false }}>
             {() => (
               <Tab.Navigator
-                tabBarOptions={{
-                  activeTintColor: "#6E3FAC",
-                  incativeTintColor: "gray",
+                screenOptions={{
+                  tabBarActiveTintColor: "#6E3FAC",
+                  tabBarStyle: [
+                    {
+                      display: "flex",
+                    },
+                    null,
+                  ],
                 }}
               >
                 <Tab.Screen

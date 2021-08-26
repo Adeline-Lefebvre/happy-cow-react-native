@@ -35,6 +35,7 @@ export default function RestaurantScreen({
 
   const {
     pictures,
+    thumbnail,
     name,
     type,
     rating,
@@ -58,8 +59,14 @@ export default function RestaurantScreen({
 
   let firstPictures = [];
 
-  for (let i = 0; i < 7; i++) {
-    firstPictures.push(pictures[i]);
+  if (pictures.length > 0) {
+    for (let i = 0; i < 7; i++) {
+      if (pictures[i]) {
+        firstPictures.push(pictures[i]);
+      }
+    }
+  } else {
+    firstPictures.push(thumbnail);
   }
 
   const color = StyleSheet.create({
@@ -204,7 +211,7 @@ const styles = StyleSheet.create({
   },
   shadow: {
     position: "absolute",
-    height: 150,
+    height: 120,
     width: "100%",
   },
   category: {
