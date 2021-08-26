@@ -23,6 +23,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [coords, setCoords] = useState();
   const [favorites, setFavorites] = useState([]);
+  const [keyword, setKeyword] = useState("");
 
   const storeFavorites = async (favs) => {
     if (favs) {
@@ -97,13 +98,18 @@ export default function App() {
                         name="Restaurants"
                         options={{ headerShown: false }}
                       >
-                        {() => <RestaurantsScreen coords={coords} />}
+                        {() => (
+                          <RestaurantsScreen
+                            coords={coords}
+                            keyword={keyword}
+                          />
+                        )}
                       </Stack.Screen>
                       <Stack.Screen
                         name="Search"
                         options={{ headerShown: false }}
                       >
-                        {() => <SearchScreen />}
+                        {() => <SearchScreen setKeyword={setKeyword} />}
                       </Stack.Screen>
                       <Stack.Screen
                         name="Restaurant"

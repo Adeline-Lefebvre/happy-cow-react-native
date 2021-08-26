@@ -10,8 +10,7 @@ import {
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 
-export default function SearchScreen() {
-  const [keyword, setKeyword] = useState("biocoop");
+export default function SearchScreen({ setKeyword }) {
   const [city, setCity] = useState();
 
   const navigation = useNavigation();
@@ -28,7 +27,7 @@ export default function SearchScreen() {
       >
         <Entypo
           name="cross"
-          size={35}
+          size={30}
           color="purple"
           onPress={() => {
             navigation.goBack();
@@ -36,10 +35,7 @@ export default function SearchScreen() {
         />
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Restaurants", {
-              keyword: keyword,
-              city: city,
-            });
+            navigation.navigate("Restaurants");
           }}
         >
           <Text style={{ fontSize: 20, color: "purple" }}>Search</Text>
@@ -53,7 +49,6 @@ export default function SearchScreen() {
           onChangeText={(text) => {
             setKeyword(text);
           }}
-          value={keyword}
         ></TextInput>
       </View>
       <View style={styles.textInput}>

@@ -15,6 +15,7 @@ import {
   MaterialIcons,
   Ionicons,
 } from "@expo/vector-icons";
+import { SliderBox } from "react-native-image-slider-box";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { getDistance } from "geolib";
 import Constants from "expo-constants";
@@ -24,7 +25,6 @@ import Rate from "../components/Rate";
 import colorTheme from "../components/colorTheme";
 import Marker from "../components/Marker";
 import { Alert } from "react-native";
-import ArrowLeft from "../components/ArrowLeft";
 
 export default function RestaurantScreen({
   coords,
@@ -34,7 +34,7 @@ export default function RestaurantScreen({
   const { params } = useRoute();
 
   const {
-    thumbnail,
+    pictures,
     name,
     type,
     rating,
@@ -56,6 +56,12 @@ export default function RestaurantScreen({
 
   const favorite = favorites.indexOf(params.item);
 
+  let firstPictures = [];
+
+  for (let i = 0; i < 7; i++) {
+    firstPictures.push(pictures[i]);
+  }
+
   const color = StyleSheet.create({
     blueBar: {
       backgroundColor: colorTheme(type),
@@ -76,10 +82,16 @@ export default function RestaurantScreen({
   return (
     <ScrollView>
       <View>
-        <Image source={{ uri: thumbnail }} style={styles.image} />
+        <SliderBox
+          images={firstPictures}
+          activeOpacity={1}
+          dotColor={colorTheme(type)}
+          style={styles.image}
+        />
         <Image
           source={require("../assets/Rectangle.png")}
           style={styles.shadow}
+          pointerEvents="none"
         />
         <TouchableOpacity
           style={styles.arrow}
