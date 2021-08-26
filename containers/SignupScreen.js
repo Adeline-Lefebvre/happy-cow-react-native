@@ -14,18 +14,16 @@ export default function SignupScreen({ setToken }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const submit = async (event) => {
-    event.preventDefault();
-
+  const submit = async () => {
     if (email && username && password && confirmPassword) {
       if (password === confirmPassword) {
         setError("");
 
         try {
           const response = await axios.post("http://localhost:3000/signup", {
-            email: "email",
-            password: "password",
-            username: "username",
+            email: email,
+            password: password,
+            username: username,
           });
 
           setToken(response.data.token);

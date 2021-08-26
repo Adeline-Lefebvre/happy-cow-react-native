@@ -15,13 +15,10 @@ export default function SignupScreen({ setToken }) {
   const submit = async () => {
     if (email && password) {
       try {
-        const response = await axios.post(
-          "https://adeline-happy-cow.herokuapp.com/login",
-          {
-            email: email,
-            password: password,
-          }
-        );
+        const response = await axios.post("http://localhost:3000/login", {
+          email: email,
+          password: password,
+        });
 
         setToken(response.data.token);
       } catch (error) {
