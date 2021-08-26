@@ -14,29 +14,26 @@ export default function SignupScreen({ setToken }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const submit = async () => {
+  const submit = async (event) => {
+    event.preventDefault();
+
     if (email && username && password && confirmPassword) {
       if (password === confirmPassword) {
         setError("");
 
         try {
-          const response = await axios.post(
-            "https://adeline-happy-cow.herokuapp.com/signup",
-            {
-              email,
-              password,
-              username,
-            }
-          );
+          const response = await axios.post("http://localhost:3000/signup", {
+            email: "email",
+            password: "password",
+            username: "username",
+          });
+
           setToken(response.data.token);
         } catch (error) {
-          if (
-            error.response.data.error ===
-              "This username already has an account." ||
-            error.response.data.error === "This email already has an account."
-          ) {
+          if (error.response) {
             setError(error.response.data.error);
           } else {
+            console.log(error);
             setError("An error occurred.");
           }
         }
