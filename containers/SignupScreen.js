@@ -21,7 +21,7 @@ export default function SignupScreen({ setToken }) {
 
         try {
           const response = await axios.post(
-            "https://happy-cow-api.herokuapp.com/user/sign_up",
+            "https://adeline-happy-cow.herokuapp.com/signup",
             {
               email,
               password,
