@@ -4,7 +4,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import MapIcon from "../components/MapIcon";
 
-const Header = ({ btn }) => {
+const Header = ({ btn, setToken }) => {
   const navigation = useNavigation();
 
   return (
@@ -23,6 +23,15 @@ const Header = ({ btn }) => {
           }}
         />
       )}
+      <Entypo
+        name="log-out"
+        size={26}
+        color="white"
+        style={styles.logoutBtn}
+        onPress={() => {
+          setToken(null);
+        }}
+      />
     </View>
   );
 };
@@ -45,6 +54,13 @@ const styles = StyleSheet.create({
     lineHeight: 50,
     textAlign: "center",
     position: "absolute",
-    right: 12,
+    right: 15,
+  },
+  logoutBtn: {
+    lineHeight: 50,
+    width: 60,
+    textAlign: "center",
+    position: "absolute",
+    left: 0,
   },
 });

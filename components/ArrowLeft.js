@@ -14,7 +14,7 @@ const ArrowLeft = () => {
         navigation.goBack();
       }}
     >
-      <Feather name="arrow-left" size={35} color="white" />
+      <Feather name="arrow-left" size={32} color="white" />
     </TouchableOpacity>
   );
 };
@@ -24,7 +24,7 @@ export default ArrowLeft;
 const styles = StyleSheet.create({
   arrow: {
     position: "absolute",
-    top: 10,
+    top: 12,
     left: 15,
   },
 });

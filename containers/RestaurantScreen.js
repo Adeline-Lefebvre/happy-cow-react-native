@@ -6,25 +6,17 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Linking,
 } from "react-native";
-import {
-  Feather,
-  FontAwesome5,
-  FontAwesome,
-  MaterialIcons,
-  Ionicons,
-} from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { SliderBox } from "react-native-image-slider-box";
 import { useNavigation, useRoute } from "@react-navigation/core";
-import { getDistance } from "geolib";
 import Constants from "expo-constants";
+import FavoriteHeart from "../components/FavoriteHeart";
 import MapView from "react-native-maps";
-import Icon from "../components/Icon";
-import Rate from "../components/Rate";
 import colorTheme from "../components/colorTheme";
 import Marker from "../components/Marker";
-import { Alert } from "react-native";
+import RestaurantButtons from "../components/RestaurantButtons";
+import RestaurantHeader from "../components/RestaurantHeader";
 
 export default function RestaurantScreen({
   coords,
@@ -46,16 +38,7 @@ export default function RestaurantScreen({
     phone,
   } = params.item;
 
-  const distance = (
-    getDistance(
-      { latitude: coords.latitude, longitude: coords.longitude },
-      { latitude: location.lat, longitude: location.lng }
-    ) / 1000
-  ).toFixed(2);
-
   const navigation = useNavigation();
-
-  const favorite = favorites.indexOf(params.item);
 
   let firstPictures = [];
 
@@ -68,23 +51,6 @@ export default function RestaurantScreen({
   } else {
     firstPictures.push(thumbnail);
   }
-
-  const color = StyleSheet.create({
-    blueBar: {
-      backgroundColor: colorTheme(type),
-      height: 110,
-      padding: 15,
-    },
-    icons: {
-      backgroundColor: colorTheme(type),
-      width: 55,
-      height: 55,
-      alignItems: "center",
-      justifyContent: "center",
-      borderRadius: 30,
-      marginBottom: 10,
-    },
-  });
 
   return (
     <ScrollView>
@@ -109,73 +75,20 @@ export default function RestaurantScreen({
         >
           <Feather name="arrow-left" size={35} color="white" />
         </TouchableOpacity>
-
-        {favorite === -1 ? (
-          <TouchableOpacity
-            style={styles.heart}
-            activeOpacity={0.8}
-            onPress={() => {
-              const newTab = [...favorites];
-              newTab.push(params.item);
-              storeFavorites(newTab);
-              Alert.alert("Ajouté à la liste de favoris");
-            }}
-          >
-            <Feather name="heart" size={25} color="white" />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.heart}
-            activeOpacity={0.8}
-            onPress={() => {
-              const newTab = [...favorites];
-              newTab.splice(favorite, 1);
-              storeFavorites(newTab);
-              Alert.alert("Retiré de la liste de favoris");
-            }}
-          >
-            <FontAwesome name="heart" size={25} color="white" />
-          </TouchableOpacity>
-        )}
-      </View>
-      <View style={color.blueBar}>
-        <Text style={styles.name}>{name}</Text>
-        <Rate
-          rating={rating}
-          link={link}
-          bgColor={colorTheme(type)}
-          reviewColor="white"
+        <FavoriteHeart
+          storeFavorites={storeFavorites}
+          favorites={favorites}
+          params={params}
         />
       </View>
-      <View style={styles.category}>
-        <Icon type={type} style={styles.icon} />
-        <Text style={styles.title}>{type}</Text>
-        <Text style={styles.distance}>{distance} km</Text>
-      </View>
-      <View style={styles.btns}>
-        <View style={styles.btn}>
-          <View style={color.icons}>
-            <FontAwesome5 name="pen" size={20} color="white" />
-          </View>
-          <Text>Add Review</Text>
-        </View>
-        <View style={styles.btn}>
-          <View style={color.icons}>
-            <MaterialIcons name="add-a-photo" size={24} color="white" />
-          </View>
-          <Text>Add Photos</Text>
-        </View>
-        <View style={styles.btn}>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={color.icons}
-            onPress={() => Linking.openURL(`tel:${phone}`)}
-          >
-            <Ionicons name="call" size={24} color="white" />
-          </TouchableOpacity>
-          <Text>Call</Text>
-        </View>
-      </View>
+      <RestaurantHeader
+        rating={rating}
+        link={link}
+        type={type}
+        name={name}
+        location={location}
+      />
+      <RestaurantButtons phone={phone} type={type} />
       <Text style={styles.description}>{description}</Text>
 
       <MapView
@@ -214,43 +127,10 @@ const styles = StyleSheet.create({
     height: 120,
     width: "100%",
   },
-  category: {
-    position: "absolute",
-    right: 30,
-    top: 190,
-    alignItems: "center",
-  },
-  icon: {
-    height: 60,
-    width: 60,
-  },
-  title: {
-    color: "white",
-    fontWeight: "600",
-    textTransform: "uppercase",
-    marginTop: 10,
-    textAlign: "center",
-  },
-  distance: {
-    color: "white",
-    marginTop: 20,
-    textAlign: "center",
-    fontWeight: "600",
-  },
   arrow: {
     position: "absolute",
     top: Constants.statusBarHeight + 10,
     left: 15,
-  },
-  heart: {
-    position: "absolute",
-    top: Constants.statusBarHeight + 12,
-    right: 15,
-  },
-  name: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "700",
   },
   description: {
     lineHeight: 25,
@@ -272,18 +152,5 @@ const styles = StyleSheet.create({
     height: 46,
     marginLeft: -18,
     marginTop: -46,
-  },
-  btns: {
-    height: 110,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderBottomColor: "lightgray",
-    borderBottomWidth: 1,
-  },
-  btn: {
-    alignItems: "center",
-    width: 80,
   },
 });

@@ -20,7 +20,7 @@ export default function SignupScreen({ setToken }) {
         setError("");
 
         try {
-          const response = await axios.post("http://localhost:3000/signup", {
+          const response = await axios.post("http://172.20.10.3:3000/signup", {
             email: email,
             password: password,
             username: username,
@@ -29,7 +29,7 @@ export default function SignupScreen({ setToken }) {
           setToken(response.data.token);
         } catch (error) {
           if (error.response) {
-            setError(error.response.data.error);
+            setError(error.response.data.message);
           } else {
             console.log(error);
             setError("An error occurred.");

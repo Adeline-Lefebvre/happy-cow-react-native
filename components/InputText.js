@@ -19,6 +19,9 @@ const InputText = ({
       />
       <TextInput
         placeholder={placeholder}
+        autoCapitalize="none"
+        autoCompleteType="off"
+        autoCorrect="false"
         style={styles.text}
         onChangeText={(text) => {
           {

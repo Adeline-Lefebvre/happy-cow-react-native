@@ -15,7 +15,7 @@ export default function SignupScreen({ setToken }) {
   const submit = async () => {
     if (email && password) {
       try {
-        const response = await axios.post("http://localhost:3000/login", {
+        const response = await axios.post("http://172.20.10.3:3000/login", {
           email: email,
           password: password,
         });

@@ -12,7 +12,7 @@ const RestaurantCard = ({ item, coords }) => {
 
   const distance = (
     getDistance(
-      { latitude: coords.latitude, longitude: coords.longitude },
+      { latitude: 48.857559, longitude: 2.352021 },
       { latitude: location.lat, longitude: location.lng }
     ) / 1000
   ).toFixed(2);

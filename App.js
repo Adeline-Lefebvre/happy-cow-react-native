@@ -71,12 +71,12 @@ export default function App() {
       if (AsyncStorage.getItem("userToken")) {
         setUserToken(await AsyncStorage.getItem("userToken"));
       }
-      setIsLoading(false);
     };
 
     askPermission();
     getFavorites();
     bootstrapAsync();
+    setIsLoading(false);
   }, []);
 
   return (
@@ -91,11 +91,11 @@ export default function App() {
         </Stack.Navigator>
       ) : userToken === null ? (
         <Stack.Navigator>
-          <Stack.Screen name="SignUp" options={{ headerShown: false }}>
-            {() => <SignupScreen setToken={setToken} />}
-          </Stack.Screen>
           <Stack.Screen name="LogIn" options={{ headerShown: false }}>
             {() => <LoginScreen setToken={setToken} />}
+          </Stack.Screen>
+          <Stack.Screen name="SignUp" options={{ headerShown: false }}>
+            {() => <SignupScreen setToken={setToken} />}
           </Stack.Screen>
         </Stack.Navigator>
       ) : (
@@ -133,6 +133,7 @@ export default function App() {
                           <RestaurantsScreen
                             coords={coords}
                             keyword={keyword}
+                            setToken={setToken}
                           />
                         )}
                       </Stack.Screen>
@@ -155,7 +156,9 @@ export default function App() {
                         )}
                       </Stack.Screen>
                       <Stack.Screen name="Map" options={{ headerShown: false }}>
-                        {() => <MapScreen coords={coords} />}
+                        {() => (
+                          <MapScreen coords={coords} setToken={setToken} />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
