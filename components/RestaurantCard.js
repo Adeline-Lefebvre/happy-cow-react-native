@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { getDistance } from "geolib";
 import Icon from "./Icon";
 import Rate from "./Rate";
-import { getDistance } from "geolib";
 
 const RestaurantCard = ({ item, coords }) => {
   const { thumbnail, name, type, rating, description, link, location } = item;
@@ -12,7 +12,7 @@ const RestaurantCard = ({ item, coords }) => {
 
   const distance = (
     getDistance(
-      { latitude: 48.857559, longitude: 2.352021 },
+      { latitude: coords.latitude, longitude: coords.longitude },
       { latitude: location.lat, longitude: location.lng }
     ) / 1000
   ).toFixed(2);

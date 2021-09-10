@@ -22,9 +22,8 @@ export default function App() {
   const [userToken, setUserToken] = useState(null);
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [coords, setCoords] = useState();
+  const [coords, setCoords] = useState({});
   const [favorites, setFavorites] = useState([]);
-  const [keyword, setKeyword] = useState("");
 
   const storeFavorites = async (favs) => {
     if (favs) {
@@ -56,6 +55,7 @@ export default function App() {
           longitude: location.coords.longitude,
         };
         setCoords(obj);
+        setIsLoading(false);
       } else {
         setError(true);
       }
@@ -76,7 +76,6 @@ export default function App() {
     askPermission();
     getFavorites();
     bootstrapAsync();
-    setIsLoading(false);
   }, []);
 
   return (
@@ -132,7 +131,6 @@ export default function App() {
                         {() => (
                           <RestaurantsScreen
                             coords={coords}
-                            keyword={keyword}
                             setToken={setToken}
                           />
                         )}
@@ -141,7 +139,7 @@ export default function App() {
                         name="Search"
                         options={{ headerShown: false }}
                       >
-                        {() => <SearchScreen setKeyword={setKeyword} />}
+                        {() => <SearchScreen />}
                       </Stack.Screen>
                       <Stack.Screen
                         name="Restaurant"

@@ -20,11 +20,14 @@ export default function SignupScreen({ setToken }) {
         setError("");
 
         try {
-          const response = await axios.post("http://172.20.10.3:3000/signup", {
-            email: email,
-            password: password,
-            username: username,
-          });
+          const response = await axios.post(
+            "https://adeline-happy-cow.herokuapp.com/signup",
+            {
+              email: email,
+              password: password,
+              username: username,
+            }
+          );
 
           setToken(response.data.token);
         } catch (error) {

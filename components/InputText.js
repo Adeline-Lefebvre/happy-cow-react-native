@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, TextInput } from "react-native";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const InputText = ({
   iconName,
@@ -19,15 +19,9 @@ const InputText = ({
       />
       <TextInput
         placeholder={placeholder}
-        autoCapitalize="none"
         autoCompleteType="off"
-        autoCorrect="false"
         style={styles.text}
-        onChangeText={(text) => {
-          {
-            onChangeText(text);
-          }
-        }}
+        onChangeText={(x) => onChangeText(x)}
       ></TextInput>
     </View>
   );

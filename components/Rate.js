@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Linking } from "react-native";
 import { Rating } from "react-native-elements";
-import { Linking } from "react-native";
 
 const Rate = ({ rating, link, bgColor, reviewColor }) => {
   const styles = StyleSheet.create({

@@ -5,10 +5,10 @@ import Icon from "../components/Icon";
 import Rate from "../components/Rate";
 import colorTheme from "./colorTheme";
 
-const RestaurantHeader = ({ rating, link, type, name, location }) => {
+const RestaurantHeader = ({ rating, link, type, name, location, coords }) => {
   const distance = (
     getDistance(
-      { latitude: 48.857559, longitude: 2.352021 },
+      { latitude: coords.latitude, longitude: coords.longitude },
       { latitude: location.lat, longitude: location.lng }
     ) / 1000
   ).toFixed(2);

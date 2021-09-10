@@ -4,8 +4,9 @@ import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import InputText from "../components/InputText";
 
-export default function SearchScreen({ setKeyword }) {
+export default function SearchScreen() {
   const [city, setCity] = useState();
+  const [keyword, setKeyword] = useState("");
 
   const navigation = useNavigation();
 
@@ -29,7 +30,7 @@ export default function SearchScreen({ setKeyword }) {
         />
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Restaurants");
+            navigation.navigate("Restaurants", keyword);
           }}
         >
           <Text style={{ fontSize: 20, color: "purple" }}>Search</Text>

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import RestaurantsList from "../components/RestaurantsList";
 import Statusbar from "../components/Statusbar";
 import Filters from "../components/Filters";
 
-export default function RestaurantsScreen({ coords, keyword, setToken }) {
-  const [filters, setFilters] = useState({});
+export default function RestaurantsScreen({ coords, setToken }) {
+  const [filters, setFilters] = useState({
+    vegan: false,
+    vegetarian: false,
+    "veg-options": false,
+  });
   const [displayAll, setDisplayAll] = useState(true);
 
   const handleFilters = (filter) => {
@@ -35,7 +39,6 @@ export default function RestaurantsScreen({ coords, keyword, setToken }) {
         coords={coords}
         filters={filters}
         displayAll={displayAll}
-        keyword={keyword}
       />
     </View>
   );

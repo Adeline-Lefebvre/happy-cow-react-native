@@ -87,6 +87,7 @@ export default function RestaurantScreen({
         type={type}
         name={name}
         location={location}
+        coords={coords}
       />
       <RestaurantButtons phone={phone} type={type} />
       <Text style={styles.description}>{description}</Text>
